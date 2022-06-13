@@ -19,6 +19,14 @@ public class AuthController {
         userService.save(user);
         return "Saved Successfully";
     }
+
+    @PutMapping("/edit")
+    public String edit(@RequestBody User user) {
+        User editUser = userService.getById(user.getId());
+        editUser.setUsername(user.getUsername());
+        userService.save(user);
+        return "Saved Successfully";
+    }
     @PostMapping("/saveNormal")
     public String saveNormal(@RequestBody Normal user) {
         userService.save(user);
@@ -37,6 +45,12 @@ public class AuthController {
     @GetMapping("/getUserByName/{userName}")
     public User getUserByName(@PathVariable String userName) {
         return userService.getUserByUserName(userName);
+    }
+
+    @GetMapping("/loadUserByUsername/{userName}")
+    public UserDetails loadUserByUsername(@PathVariable String userName) {
+        var result = userService.loadUserByUsername(userName);
+        return  result;
     }
 
 }
