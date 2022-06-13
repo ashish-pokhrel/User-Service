@@ -24,7 +24,16 @@ public class AuthController {
     public String edit(@RequestBody User user) {
         User editUser = userService.getById(user.getId());
         editUser.setUsername(user.getUsername());
-        userService.save(user);
+        String role =editUser.getRole().toUpperCase();
+        if( role.toUpperCase().equals("ADMIN"))
+        {
+            Admin admin = (Admin) editUser;
+            userService.save(admin);
+        }
+        else {
+            Normal normal = (Normal) editUser;
+            userService.save(normal);
+        }
         return "Saved Successfully";
     }
     @PostMapping("/saveNormal")
