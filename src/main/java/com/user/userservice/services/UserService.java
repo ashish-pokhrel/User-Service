@@ -47,5 +47,7 @@ public class UserService implements UserDetailsService {
         return role;
     }
 
-
+    public void deletById(Long id) {
+        userRepo.deleteById(id);
+    }
 }

@@ -24,23 +24,23 @@ public class AuthController {
     public String edit(@RequestBody User user) {
         User editUser = userService.getById(user.getId());
         editUser.setUsername(user.getUsername());
-        String role =editUser.getRole().toUpperCase();
-        if( role.toUpperCase().equals("ADMIN"))
-        {
+        String role = editUser.getRole().toUpperCase();
+        if (role.toUpperCase().equals("ADMIN")) {
             Admin admin = (Admin) editUser;
             userService.save(admin);
-        }
-        else {
+        } else {
             Normal normal = (Normal) editUser;
             userService.save(normal);
         }
         return "Saved Successfully";
     }
+
     @PostMapping("/saveNormal")
     public String saveNormal(@RequestBody Normal user) {
         userService.save(user);
         return "Saved Successfully";
     }
+
     @GetMapping("/get/{id}")
     public User getUser(@PathVariable Long id) {
         return userService.getById(id);
@@ -59,7 +59,12 @@ public class AuthController {
     @GetMapping("/loadUserByUsername/{userName}")
     public UserDetails loadUserByUsername(@PathVariable String userName) {
         var result = userService.loadUserByUsername(userName);
-        return  result;
+        return result;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        userService.deletById(id);
+        return "Deleted Successfully";
+    }
 }
